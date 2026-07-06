@@ -1,0 +1,14 @@
+admin:
+Username: ali
+Password: NewPassword123!
+
+staff:
+not implemented yet
+
+user:
+Username: subhan
+Password: NewPassword123!
+Username: usman
+Password: NewPassword123
+Username: irrelevant
+Password: irrelevant
