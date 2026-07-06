@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from django.utils import timezone
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -29,7 +30,8 @@ from .serializers import AdminChangePasswordSerializer
 
 User = get_user_model()
 
-
+ADMIN_LOGIN_START = 9
+ADMIN_LOGIN_END = 17
 
 class AdminOnlyView(APIView):
     permission_classes = [IsAdmin]
@@ -51,7 +53,17 @@ class LoginView(APIView):
         serializer.is_valid(raise_exception=True)
 
         user = serializer.validated_data["user"]
+        
+        current_hour = timezone.localtime(timezone.now()).hour
 
+        if user.groups.filter(name="Admin").exists():
+            if not (ADMIN_LOGIN_START <= current_hour < ADMIN_LOGIN_END):
+                return Response(
+                        {
+                            "detail": "Admin login is only allowed between 9:00 AM and 5:00 PM."
+                        },
+                status=status.HTTP_403_FORBIDDEN,
+            )
         refresh = RefreshToken.for_user(user)
         access = refresh.access_token
         role = user.groups.first().name if user.groups.exists() else "User"
