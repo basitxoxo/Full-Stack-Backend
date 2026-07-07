@@ -180,18 +180,23 @@ USE_TZ = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://full-stack-frontend-ve8a.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SECURE = False      # True in production
-CSRF_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "None"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://full-stack-frontend-ve8a.onrender.com",
+]
 
 # Refresh Token Cookie Settings
 
@@ -199,9 +204,9 @@ REFRESH_TOKEN_COOKIE_NAME = "refresh_token"
 
 REFRESH_TOKEN_COOKIE_HTTPONLY = True
 
-REFRESH_TOKEN_COOKIE_SECURE = False      # True in production (HTTPS)
+REFRESH_TOKEN_COOKIE_SECURE = True      # True in production (HTTPS)
 
-REFRESH_TOKEN_COOKIE_SAMESITE = "Lax"    # or "Strict"
+REFRESH_TOKEN_COOKIE_SAMESITE = "None"    # or "Strict"
 
 REFRESH_TOKEN_COOKIE_MAX_AGE = 7 * 24 * 60 * 60
 
@@ -216,6 +221,7 @@ CONTENT_SECURITY_POLICY = {
             "'self'",
             "http://localhost:5173",
             "http://127.0.0.1:5173",
+            "https://full-stack-frontend-ve8a.onrender.com",
         ),
     }
 }
@@ -230,8 +236,9 @@ SECURE_HSTS_PRELOAD = True
 
 SECURE_SSL_REDIRECT = False
 
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
