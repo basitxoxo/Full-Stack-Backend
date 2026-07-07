@@ -10,3 +10,4 @@ psycopg2-binary
 python-dotenv
 django-csp
 argon2-cffi
+gunicorn
